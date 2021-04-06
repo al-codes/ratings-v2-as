@@ -12,7 +12,7 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    #added comma after 'True' for primary key
+    
     user_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)

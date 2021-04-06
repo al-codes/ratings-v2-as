@@ -1,9 +1,15 @@
-"""CRUD operations."""
-
 from model import db, User, Movie, Rating, connect_to_db
 
+# create_user('john','john.doe@email.com')
+# create_movie("My First Movie","My first movie is the story of...","2018, 10,31", "w
+#    ...: ww.yahoo.com")
 
-# Functions start here!
+############ Need to add create rating and sessions ##########
+
+
+
+"""CRUD operations."""
+
 
 def create_user(email, password):
     """Create and return a new user."""
@@ -29,16 +35,6 @@ def create_movie(title, overview, release_date, poster_path):
 
     return movie
 
-def get_movies():
-    """Returns all movies."""
-
-    return Movie.query.all()
-
-def get_movie_by_id(movie_id):
-    """Returns movie by ID."""
-
-    return Movie.query.get(movie_id)
-
 
 def create_rating(user, movie, score):
     """Create and return a new rating."""
@@ -51,6 +47,33 @@ def create_rating(user, movie, score):
     db.session.commit()
 
     return rating
+
+
+def get_users():
+    """Returns all users."""
+
+    return User.query.all()
+
+def get_user_by_id(user_id):
+    """Rerturns user by ID."""
+
+    return User.query.get(user_id)
+
+def get_user_by_email():
+    """Returns user by email."""
+
+    return User.query.filter(User.email == email).first()
+
+
+def get_movies():
+    """Returns all movies."""
+
+    return Movie.query.all()
+
+def get_movie_by_id(movie_id):
+    """Returns movie by ID."""
+
+    return Movie.query.get(movie_id)
 
 
 
