@@ -1,3 +1,5 @@
 /env
-
+.DS_Store
 /__pycache__
+.vscode/
+__pycache__/server.cpython-36.pyc
