@@ -15,10 +15,12 @@ class User(db.Model):
     #added comma after 'True' for primary key
     user_id = db.Column(db.Integer,
                         autoincrement=True,
-                        primary_key=True,)
+                        primary_key=True)
     #added nullable statement to email and password
     email = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
+
+    # ratings = a list of Rating objects
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
@@ -36,6 +38,8 @@ class Movie(db.Model):
     overview = db.Column(db.Text)
     release_date = db.Column(db.DateTime)
     poster_path = db.Column(db.String)
+
+    # ratings = a list of Rating objects
 
     def __repr__(self):
         return f'<Movie movie_id={self.movie_id} title={self.title}>'
@@ -77,7 +81,4 @@ if __name__ == '__main__':
 
     connect_to_db(app)
 
-
-# ratings = Rating.query.all()
-#print(ratings[0].movie.title)
-#print(Rating.user.email)
+    
