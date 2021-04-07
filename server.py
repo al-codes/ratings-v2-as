@@ -20,6 +20,10 @@ app.jinja_env.undefined = StrictUndefined
 def homepage():
     """Homepage"""
 
+    # Flask session set up for ratings & login
+    session['show_form'] = True
+    session['show_login'] = True
+
     return render_template('homepage.html')
 
 
@@ -39,6 +43,23 @@ def show_movie(movie_id):
     movie = crud.get_movie_by_id(movie_id)
 
     return render_template('movie_details.html', movie=movie)
+
+
+@app.route('/movies/<movie_id>', methods=['POST'])
+def make_movie_rating(movie_id):
+	"""Create a new rating."""
+
+	movie = crud.get_movie_by_id(movie_id)
+	user_s = session['user']
+	score = request.form['score']
+
+	new_rating = crud.create_rating(user_s, movie, score)
+	print(new_rating)
+	session['rating'] = new_rating
+
+	return redirect('movie_details.html')
+
+	return render_template('movie_details.html', movie=movie)
 
 
 @app.route('/users')
@@ -67,15 +88,15 @@ def register_user():
     password = request.form.get('password')
 
     user = crud.get_user_by_email(email)
-    passwd = crud.get_user_by_password(password)
+    session['user'] =[]
+
 
     if user:
-        flash('Cannot create an account with that email. Try again.')
-        return render_template('/')
+        flash('This email may already be registered. Try again.')
+        
     else:
         crud.create_user(email, password)
         flash('Account created! Please log in.')
-        return render_template('/')
 
     return redirect('/')
 
