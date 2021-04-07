@@ -80,8 +80,8 @@ def user_details(user_id):
     return render_template('user_details.html', user=user)
 
 
-@app.route('/register', methods=['POST'])
-def register_user():
+@app.route('/login', methods=['POST'])
+def login_user():
     """Create a new user."""
 
     email = request.form.get('email')
@@ -91,15 +91,17 @@ def register_user():
     session['user'] =[]
 
 
-    if user:
-        flash('This email may already be registered. Try again.')
-        
+    if user != None:
+        if user == user.password == password:
+            session['user'] = user.user_id
+            flash('Logged in successfully')
+        else:
+            flash('Incorrect email or password')
     else:
         crud.create_user(email, password)
         flash('Account created! Please log in.')
 
     return redirect('/')
-
 
 
 if __name__ == '__main__':
